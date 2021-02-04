@@ -18,25 +18,10 @@ public class CustomerController {
 
     private final CreditCardPublisher creditCardPublisher;
 
-   // private final CustomerService customerService;
-
-    @PostMapping("/create/v2")
+    @PostMapping("/create")
     public void createCustomer(@RequestBody Customer customer){
         customer.setCustomerId(UUID.randomUUID());
         this.creditCardPublisher.raiseCardEvent(customer, CardStatus.CARD_VERIFYING);
-    }
-
-
-    /**
-     * The below method is only a illustration if you are using
-     * Spring Cloud Streams < 3.1.
-     * @param customer
-     */
-
-    @PostMapping("/create/v1")
-    public void customer(@RequestBody Customer customer){
-        customer.setCustomerId(UUID.randomUUID());
-      //  this.customerService.sendCustomer(customer);
     }
 
 }

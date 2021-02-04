@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -31,5 +32,10 @@ public class CreditCardConfig {
     @Bean
     public Consumer<CardEvent> cardEventConsumer(){
         return cardEvent -> cardStatusUpdateEventHandler.updateCardStatus(cardEvent.getCreditCardDto());
+    }
+
+    @Bean
+    public Function<Flux<String>, Flux<String>> uppercase() {
+        return flux -> flux.map(String::toUpperCase);
     }
 }

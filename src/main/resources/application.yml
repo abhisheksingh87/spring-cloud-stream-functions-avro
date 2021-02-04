@@ -2,10 +2,14 @@ spring:
   cloud:
     stream:
       function:
-        definition: cardSupplier;cardEventConsumer
+        definition: cardSupplier;cardEventConsumer;upperCase
       bindings:
           cardSupplier-out-0:
               destination: card-events
           cardEventConsumer-in-0:
               destination: card-events
               group: card-consumer
+          upperCase-out-0:
+              destination: string-event
+          upperCase-in-0:
+              destination: string-event
