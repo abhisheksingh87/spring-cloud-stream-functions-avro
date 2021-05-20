@@ -19,11 +19,25 @@ public class CreditCardConfig {
     @Autowired
     private CardStatusUpdateEventHandler cardStatusUpdateEventHandler;
 
+    /**
+     * {@link Sinks} are a special kind of Publisher that are also a Subscriber.
+     * These expose standalone sinks expose tryEmit methods which is used by
+     * {@link com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.service.CreditCardPublisher} class
+     * to emit CardEvent
+     *
+     */
     @Bean
     public Sinks.Many<CardEvent> cardSink(){
         return Sinks.many().unicast().onBackpressureBuffer();
     }
 
+    /**
+     * {@link Sinks} are a special kind of Publisher that are also a Subscriber.
+     * These expose standalone sinks expose tryEmit methods that return an Sinks.EmitResult enum,
+     * allowing to atomically fail in case the attempted signal is inconsistent with the spec
+     * and/or the state of the sink.
+     *
+     */
     @Bean
     public Supplier<Flux<CardEvent>> cardSupplier(Sinks.Many<CardEvent> sink){
         return sink::asFlux;
