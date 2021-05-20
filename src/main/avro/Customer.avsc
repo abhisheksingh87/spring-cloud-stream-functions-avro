@@ -1,0 +1,53 @@
+{
+  "type" : "record",
+  "name" : "CardEvent",
+  "namespace" : "com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.event.card",
+  "doc" : "Schema for com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.event.card.CardEvent",
+  "fields" : [ {
+    "name" : "cardStatus",
+    "type" : [ "null", {
+      "type" : "enum",
+      "name" : "CardStatus",
+      "doc" : "",
+      "symbols" : [ "CARD_VERIFYING", "CARD_VERIFIED", "CARD_IDENTITY_VERIFIED" ]
+    } ]
+  }, {
+    "name" : "creditCardDto",
+    "type" : [ "null", {
+      "type" : "record",
+      "name" : "CreditCardDto",
+      "namespace" : "com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.dto",
+      "doc" : "Schema for com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.dto.CreditCardDto",
+      "fields" : [ {
+        "name" : "amountLimit",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "cardStatus",
+        "type" : [ "null", "com.wellsfargo.cto.eai.starter.kafka.cloudstreams.function.event.card.CardStatus" ]
+      }, {
+        "name" : "cardType",
+        "type" : [ "null", {
+          "type" : "enum",
+          "name" : "CardType",
+          "doc" : "",
+          "symbols" : [ "VISA", "Master" ]
+        } ]
+      }, {
+        "name" : "customerId",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "customerIncome",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "id",
+        "type" : [ "null", "string" ]
+      } ]
+    } ]
+  }, {
+    "name" : "date",
+    "type" : [ "null", "long" ]
+  }, {
+    "name" : "eventId",
+    "type" : [ "null", "string" ]
+  } ]
+}

@@ -10,6 +10,8 @@ import lombok.var;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Sinks;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 @Service
@@ -18,16 +20,21 @@ public class CreditCardPublisher {
 
     private final Sinks.Many<CardEvent> cardSink;
 
-    public void raiseCardEvent(final Customer customer, CardStatus cardStatus){
-        var creditCardDto = CreditCardDto.of(
-                UUID.randomUUID(),
-                CardType.VISA,
-                customer.getIncome(),
-                null,
-                customer.getCustomerId().toString(),
-                cardStatus
-        );
-        var cardEvent = new CardEvent(creditCardDto, cardStatus);
+    public void raiseCardEvent(final Customer customer, CardStatus cardStatus) {
+        var creditCardDto = CreditCardDto.newBuilder()
+                .setCustomerId(customer.getCustomerId().toString())
+                .setCardStatus(CardStatus.CARD_VERIFYING)
+                .setCustomerIncome(customer.getIncome())
+                .setAmountLimit("100")
+                .setCardType(CardType.Master)
+                .setId(UUID.randomUUID().toString()).build();
+
+        var cardEvent = CardEvent.newBuilder()
+                .setEventId(UUID.randomUUID().toString())
+                .setCreditCardDto(creditCardDto)
+                .setCardStatus(cardStatus)
+                .setDate(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
+                .build();
         this.cardSink.tryEmitNext(cardEvent);
     }
 

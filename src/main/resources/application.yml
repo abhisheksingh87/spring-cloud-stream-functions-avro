@@ -6,10 +6,19 @@ spring:
       bindings:
           cardSupplier-out-0:
               destination: card-events
+              content-type: application/*+avro
           cardEventConsumer-in-0:
               destination: card-events
+              content-type: application/*+avro
               group: card-consumer
-          upperCase-out-0:
-              destination: string-event
-          upperCase-in-0:
-              destination: string-event
+      kafka:
+        binder:
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+            schema.registry.url: http://localhost:8081
+          consumer-properties:
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+            schema.registry.url: http://localhost:8081
+            specific.avro.reader: true
