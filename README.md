@@ -17,6 +17,14 @@ You can build the project using the provided gradle wrapper:
 ./gradlew clean build -x test
 ```
 
+The project uses `avro` for data serialization and data exchange:
+
+you can run below command to generate avro data transfer objects:
+```bash
+./gradlew generateAvroJava
+```
+
+
 ### Run the app locally
 
 To run the app locally using the embedded Tomcat server you can run this command:
