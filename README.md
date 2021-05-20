@@ -1,4 +1,4 @@
-# kafka-starter
+# kafka-reactive-starter-avro
 
 This starter provides a simple kafka producer and consumer, based on _Spring Webflux_ and _Spring Cloud Streams_
 
